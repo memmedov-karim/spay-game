@@ -1,0 +1,52 @@
+.footer {
+    background-color: #282c34;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-logo img {
+    width: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-text {
+    font-size: 16px;
+  }
+  
+  .footer-social {
+    margin-top: 10px;
+  }
+  
+  .footer-social a {
+    color: white;
+    margin: 0 10px;
+  }
+  
+  .footer-social a:hover {
+    color: #0077b5; /* LinkedIn blue color */
+  }
+  
+  @media (min-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .footer-logo {
+      margin-right: 20px;
+    }
+  
+    .footer-social {
+      margin-top: 0;
+    }
+  }
+  

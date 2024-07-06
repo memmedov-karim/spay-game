@@ -18,19 +18,21 @@ export default function Form() {
           min={0}
           value={number1}
           onChange={(e) => setNumber1(e.target.value)}
+          placeholder="İştirak edəcək oyunçu sayını daxil edin..."
         />
       </div>
       <div className="form-group">
-        <label htmlFor="number2">Spay sayı</label>
+        <label htmlFor="number2">Spy sayı</label>
         <input
           type="number"
           id="number2"
           min={0}
           value={number2}
           onChange={(e) => setNumber2(e.target.value)}
+          placeholder="Oyunda olacaq spy sayını daxil edin..."
         />
       </div>
-      <Link to={`/game/${number1 || 0}/${number2 || 0}`}>Oyuna başla</Link>
+      <Link className='button' to={`/game/${number1 || 0}/${number2 || 0}`}>Oyuna başla</Link>
     </form>
   )
 }

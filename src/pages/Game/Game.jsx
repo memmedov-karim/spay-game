@@ -24,7 +24,7 @@ const Game = () => {
     const randomWord =words[Math.floor(Math.random() * words.length)];
 
   // Generate the array with the required words
-  const spayWords = Array(spayCount).fill("spay");
+  const spayWords = Array(spayCount).fill("😎");
   const randomWords = Array(playerCount - spayCount).fill(randomWord);
     const combinedWords = [...spayWords, ...randomWords];
   //console.log(combinedWords)
@@ -89,20 +89,22 @@ const Game = () => {
   }
   // Render conditionally based on game state
   return (
-    <>
-    <button onClick={restartgame}>Oyunu sıfırla!</button>
+    <div className='gm' style={{display:"flex",flexDirection:"column"}}>
+    <button className='button buttonreset'  onClick={restartgame}>Oyunu sıfırla!</button>
     <div className='game'>
       {!gameStarted && (
         <>
-        <span>Oyunçu {currentWordIndex+1}</span>
+        
         <div className='card' onClick={handleCardClick}>
-          {showWord ? combinedWords[currentWordIndex] : "Sözü aç"}
+          <strong>
+          {showWord ? combinedWords[currentWordIndex] : "Oyunçu "+ (currentWordIndex+1)+" Aç"}
+          </strong>
         </div>
         </>
       )}
 
       {gameStarted && (
-        <div>
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center",color:"white"}}>
           <h2>Oyun Başladı!</h2>
           <p>Vaxt qalıb: {formatTime()}</p>
           {combinedWords.map((word, index) => (
@@ -111,7 +113,7 @@ const Game = () => {
         </div>
       )}
     </div>
-    </>
+    </div>
   );
 };
 

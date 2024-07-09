@@ -32,7 +32,7 @@ export default function Form() {
           placeholder="Oyunda olacaq spy sayını daxil edin..."
         />
       </div>
-      <Link className='button' to={`/game/${number1 || 0}/${number2 || 0}`}>Oyuna başla</Link>
+      {parseInt(number1)-parseInt(number2)>=0 && <Link className='button' to={`/game/${number1 || 0}/${number2 || 0}`}>Oyuna başla</Link>}
     </form>
   )
 }

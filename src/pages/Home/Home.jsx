@@ -6,7 +6,7 @@ import './Home.css';
 export default function Home() {
   return (
     <div style={{backgroundColor:"black"}} >
-      <h1 style={{ textAlign: "center",color:"white" }}>Oyun (Nicat,Xədicə,Aytən və Çələbi-nin şərəfinə hazırlanıb)</h1>
+      <h1 style={{ textAlign: "center",color:"white" }}>Spy production təqdimmm edirrr....</h1>
       <div className='home'>
         <Form />
       </div>

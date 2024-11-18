@@ -1,5 +1,5 @@
 export const words = 
-[ "Qladiator", "Titanik","balıq","Albert Einstein", "Isaac Newton", "Galileo Galilei", "Marie Curie", "Charles Darwin",
+[ "Qladiator", "Titanik","balıq","Albert Einstein", "Isaac Newton", "Galileo Galilei","xaş","diş","traynik", "Marie Curie", "Charles Darwin",
     "Leonardo da Vinci", "Martin Luther King Jr.", "Nelson Mandela", "Mahatma Gandhi",
     "alma", "dovşan", "pomidor", "pişik", "limon", "yırtıcı", "qoyun", "naringi", "çəkmə", "quş",
     "banan", "kələm", "at", "albalı", "kartof", "xiyar", "nar", "ördək", "portfel", "delfin",

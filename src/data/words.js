@@ -39,7 +39,7 @@ export const words =
     "aeroport", "təyyarə", "bilet", "pul", "bank", "kart", "dükkan", "bazar", "səbət", "güzgü", "sabun", 
     "şampun", "diş pastası", 
     "diş fırçası", "dəsmal", "kələm dolması","paltar", "köynək", "şalvar", "paltar","corab", "ayaqqabı", "gözlük", "çətir", 
-    "çanta", "telefon","qayğanaq","əmcək","öpüş","sevgi",
+    "çanta", "telefon","qayğanaq","öpüş","sevgi",
     "televizor", "kamera", "foto", "məktub", "kitab", "jurnal", "qəzet", "qələm", "karandaş", "kağız", 
     "dəftər", 
     "universitet", "sinif", "müəllim", "tələbə",
@@ -48,5 +48,5 @@ export const words =
     "Cəfər Cabbarlı", "Çingiz Abdullayev","Əliağa Vahid", "Səməd Vurğun", "Mirzə Fətəli Axundzadə", "Mirzə Ələkbər Sabir", 
     "Bəxtiyar Vahabzadə", 
     "Xəlil Rza Ulutürk", "Bülbül", "Zərifə Əliyeva", "Lütfi Zadə","Aygün Kazımova", "Brilliant Dadaşova", "Polad Bülbüloğlu", 
-    "Əlimərdan bəy Topçubaşov",
+    "Əlimərdan bəy Topçubaşov","Tom And Jerry","Donuz","Göy qurşağı","Mac Book","Lenovo","Sarimsaq"
 ]

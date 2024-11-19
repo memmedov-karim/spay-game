@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Card from '../../components/card/Card'; // Assuming Card component path is correct
 import './Game.css';
 import { words } from '../../data/words';
+import { addToLocal, filterWords } from '../../utils';
 
 const Game = () => {
   const params = useParams();
@@ -21,8 +22,8 @@ const Game = () => {
   
   // Combine and shuffle the array
   useEffect(()=>{
-    const randomWord =words[Math.floor(Math.random() * words.length)];
-
+    const randomWord = filterWords(words)[Math.floor(Math.random() * words.length)];
+    addToLocal(randomWord);
   // Generate the array with the required words
   const spayWords = Array(spayCount).fill("😎");
   const randomWords = Array(playerCount - spayCount).fill(randomWord);

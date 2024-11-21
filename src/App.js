@@ -3,7 +3,6 @@ import Home from "./pages/Home/Home.jsx";
 import Game from "./pages/Game/Game.jsx";
 import Footer from "./components/footer/Footer.js";
 import "./App.css";
-import { useEffect } from "react";
 function App() {
 
   return (

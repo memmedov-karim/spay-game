@@ -1,52 +1,75 @@
-.footer {
-    background-color: #282c34;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  
-  .footer-content {
-    display: flex;
+.spy-footer {
+  background-color: #1c1c1c; /* Dark, spy-like theme */
+  color: #e0e0e0;
+  padding: 20px 0;
+  border-top: 2px solid #4caf50; /* Subtle green border for spy aesthetic */
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.spy-footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.spy-footer-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.spy-footer-text p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+}
+
+.spy-footer-text span {
+  color: #4caf50; /* Highlighted green for spy theme */
+  font-weight: bold;
+}
+
+/* Styling for phone number */
+.spy-footer-phone {
+  margin-top: 5px;
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+.spy-footer-phone span {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.spy-footer-social {
+  display: flex;
+  align-items: center;
+}
+
+.spy-footer-social a {
+  color: #e0e0e0;
+  transition: color 0.3s ease, transform 0.3s ease;
+  margin-left: 20px;
+}
+
+.spy-footer-social a:hover {
+  color: #4caf50;
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .spy-footer-content {
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
   }
-  
-  .footer-logo img {
-    width: 100px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-text {
-    font-size: 16px;
-  }
-  
-  .footer-social {
+
+  .spy-footer-social a {
+    margin-left: 0;
     margin-top: 10px;
   }
-  
-  .footer-social a {
-    color: white;
-    margin: 0 10px;
-  }
-  
-  .footer-social a:hover {
-    color: #0077b5; /* LinkedIn blue color */
-  }
-  
-  @media (min-width: 768px) {
-    .footer-content {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  
-    .footer-logo {
-      margin-right: 20px;
-    }
-  
-    .footer-social {
-      margin-top: 0;
-    }
-  }
-  
+}

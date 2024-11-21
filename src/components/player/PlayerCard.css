@@ -1,0 +1,37 @@
+.player-card {
+    width: 150px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  
+  .player-card .card-front,
+  .player-card .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    background-color: #4caf50;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.6s;
+  }
+  
+  .player-card .card-back {
+    transform: rotateY(180deg);
+    background-color: #f44336;
+  }
+  
+  .player-card.flipped .card-front {
+    transform: rotateY(180deg);
+  }
+  
+  .player-card.flipped .card-back {
+    transform: rotateY(0);
+  }
+  

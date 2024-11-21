@@ -1,40 +1,23 @@
-.card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 200px;
-    height: 150px;
-    margin: 10px;
-    border: 1px solid #e9e4e4;
-    border-radius: 10px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    background-color: black;
-    transition: transform 0.2s;
-    cursor: pointer;
-    color: white;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .card-content {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    color: #eee6e6;
-  }
-  
-  @media (max-width: 600px) {
-    .card {
-      max-width: 200px;
-      min-width: 100px;
-      height: 150px;
-    }
-  
-    .card-content {
-      font-size: 20px;
-    }
-  }
-  
+.spy-card {
+  background: #1c1c1c;
+  border: 2px solid #ff3e3e;
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.spy-card:hover {
+  transform: scale(1.1);
+  background-color: #242424;
+}
+
+.spy-card-content {
+  text-align: center;
+}

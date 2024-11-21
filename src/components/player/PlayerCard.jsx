@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Card from '../../components/card/Card';
+import Card from '../../components/card/Card'; // Used only after the game starts
 import './Game.css';
 import { words } from '../../data/words';
 import { addToLocal, filterWords } from '../../utils';
+
+const PlayerCard = ({ word, onClick, isFlipped }) => {
+  return (
+    <div className={`player-card ${isFlipped ? 'flipped' : ''}`} onClick={onClick}>
+      <div className="card-front">Open Word</div>
+      <div className="card-back">{word}</div>
+    </div>
+  );
+};
 
 const Game = () => {
   const params = useParams();
   const { playercount, spaycount } = params;
   const playerCount = parseInt(playercount, 10);
   const spayCount = parseInt(spaycount, 10);
-  console.log(params)
+
   const [combinedWords, setCombinedWords] = useState([]);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [showWord, setShowWord] = useState(false);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [timerSeconds, setTimerSeconds] = useState(240);
+  const [timerSeconds, setTimerSeconds] = useState(240); // 4 minutes in seconds
 
   useEffect(() => {
     const randomWord = filterWords(words)[Math.floor(Math.random() * words.length)];
@@ -26,16 +35,16 @@ const Game = () => {
     setCombinedWords(shuffledWords);
   }, [playerCount, spayCount]);
 
-  const handleCardClick = () => {
-    if (showWord) {
-      setShowWord(false);
-      if (currentWordIndex + 1 === combinedWords.length) {
-        setGameStarted(true);
+  const handlePlayerCardClick = () => {
+    if (flipped) {
+      setFlipped(false);
+      if (currentPlayerIndex + 1 < combinedWords.length) {
+        setCurrentPlayerIndex(currentPlayerIndex + 1);
       } else {
-        setCurrentWordIndex(currentWordIndex + 1);
+        setGameStarted(true);
       }
     } else {
-      setShowWord(true);
+      setFlipped(true);
     }
   };
 
@@ -48,12 +57,6 @@ const Game = () => {
     }
     return () => clearInterval(interval);
   }, [gameStarted, timerSeconds]);
-
-  useEffect(() => {
-    if (timerSeconds === 0) {
-      setShowWord(true);
-    }
-  }, [timerSeconds]);
 
   const formatTime = () => {
     const minutes = Math.floor(timerSeconds / 60);
@@ -73,12 +76,13 @@ const Game = () => {
 
       <div className="spy-game-content">
         {!gameStarted ? (
-          <div className="spy-card-container" onClick={handleCardClick}>
-            <strong className="spy-card-text">
-              {showWord
-                ? combinedWords[currentWordIndex]
-                : `Player ${currentWordIndex + 1}: Open Word`}
-            </strong>
+          <div className="spy-card-container">
+            <h2>Player {currentPlayerIndex + 1}'s Turn</h2>
+            <PlayerCard
+              word={combinedWords[currentPlayerIndex]}
+              onClick={handlePlayerCardClick}
+              isFlipped={flipped}
+            />
           </div>
         ) : (
           <div className="spy-timer-container">
@@ -86,7 +90,7 @@ const Game = () => {
             <p className="spy-timer">Time Remaining: {formatTime()}</p>
             <div className="spy-card-grid">
               {combinedWords.map((word, index) => (
-                <Card key={index} word={showWord ? word : "Open Word"} />
+                <Card key={index} word={word} />
               ))}
             </div>
           </div>

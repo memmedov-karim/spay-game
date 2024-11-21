@@ -16,9 +16,9 @@ export default function Form() {
           <input
             type="number"
             id="number1"
-            min={0}
+            min={1}
             value={number1}
-            onChange={(e) => setNumber1(e.target.value)}
+            onChange={(e) => setNumber1(e.target.value === "0" ? "1" : e.target.value)}
             placeholder="Enter the number of players..."
             className="spy-input"
           />

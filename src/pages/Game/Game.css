@@ -105,3 +105,107 @@
 .player-card.flipped .card-back {
   transform: rotateY(0);
 }
+
+.spy-role-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.spy-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ff4757;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  animation: pulse 2s infinite;
+}
+
+.spy-emoji {
+  font-size: 1.5rem;
+}
+
+.spy-label {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.related-words {
+  width: 100%;
+  text-align: center;
+}
+
+.related-words-title {
+  color: #ddd;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.related-words-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.related-word-chip {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  color: #fff;
+  backdrop-filter: blur(5px);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.related-word-chip:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.player-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-number {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.tap-instruction {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.regular-player-word {
+  font-size: 2rem;
+  color: #fff;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

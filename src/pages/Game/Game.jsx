@@ -2,8 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from '../../components/card/Card';
 import './Game.css';
-import { words } from '../../data/words';
+import * as wordSets from '../../data/words';
 import { addToLocal, filterWords } from '../../utils';
+
+const SpyWordDisplay = ({ relatedWords }) => {
+  const [gameMode, setGameMode] = useState(() => {
+    return localStorage.getItem('gameMode') || 'classic';
+  });
+  return (
+    <div className="spy-role-container">
+      <div className="spy-badge">
+        <span className="spy-emoji">😎</span>
+        <span className="spy-label">You are a Spy!</span>
+      </div>
+      { gameMode === "related" && <div className="related-words">
+        <div className="related-words-title">Related Words:</div>
+        <div className="related-words-list">
+          {relatedWords.map((word, index) => (
+            <span key={index} className="related-word-chip">
+              {word.trim()}
+            </span>
+          ))}
+        </div>
+      </div>}
+    </div>
+  );
+};
 
 const Game = () => {
   const params = useParams();
@@ -16,14 +40,29 @@ const Game = () => {
   const [showWord, setShowWord] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(240);
-
+  const lng = localStorage.getItem('preferredLanguage') || 'az';
+const [randomWord, setRandomWord] = useState("");
   useEffect(() => {
-    const randomWord = filterWords(words)[Math.floor(Math.random() * words.length)];
+    const language = localStorage.getItem('preferredLanguage') || 'az';
+    const wordList = language === 'az' ? wordSets.words : wordSets.englishWords;
+    
+    const randomWord = filterWords(wordList)[Math.floor(Math.random() * wordList.length)];
+    setRandomWord(randomWord)
     addToLocal(randomWord);
-    const spayWords = Array(spayCount).fill("😎");
-    const randomWords = Array(playerCount - spayCount).fill(randomWord);
-    const shuffledWords = [...spayWords, ...randomWords].sort(() => Math.random() - 0.5);
-    setCombinedWords(shuffledWords);
+
+    const positions = Array(playerCount).fill().map((_, index) => index);
+    for (let i = positions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [positions[i], positions[j]] = [positions[j], positions[i]];
+    }
+
+    // Use first spayCount positions for spies
+    const words = Array(playerCount).fill(randomWord);
+    for (let i = 0; i < spayCount; i++) {
+      words[positions[i]] = "😎";
+    }
+
+    setCombinedWords(words);
   }, [playerCount, spayCount]);
 
   const handleCardClick = () => {
@@ -75,9 +114,22 @@ const Game = () => {
         {!gameStarted ? (
           <div className="spy-card-container" onClick={handleCardClick}>
             <strong className="spy-card-text">
-              {showWord
-                ? combinedWords[currentWordIndex]
-                : `Player ${currentWordIndex + 1}: Open Word`}
+              {showWord ? (
+                combinedWords[currentWordIndex] === "😎" ? (
+                  <SpyWordDisplay 
+                    relatedWords={wordSets.getRelatedWords(randomWord, lng)}
+                  />
+                ) : (
+                  <div className="regular-player-word">
+                    {combinedWords[currentWordIndex]}
+                  </div>
+                )
+              ) : (
+                <div className="player-prompt">
+                  <span className="player-number">Player {currentWordIndex + 1}</span>
+                  <span className="tap-instruction">Tap to reveal your word</span>
+                </div>
+              )}
             </strong>
           </div>
         ) : (

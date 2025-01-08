@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Form from '../../components/form/Form';
 import { getLocalUsedWords } from '../../utils';
 import { words } from '../../data/words';
 import SpySound from "../../assets/spy.mp3";
-import SpyLogo from "../../assets/spy-logo.png"; // Import the logo image
+import SpyLogo from "../../assets/spy-logo.png";
 import './Home.css';
 
 export default function Home() {
   const [audio] = useState(new Audio(SpySound));
   const [isPlaying, setIsPlaying] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  // Initialize language state from localStorage or default to 'en'
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('preferredLanguage') || 'en';
+  });
+  // Add new state for game mode
+  const [gameMode, setGameMode] = useState(() => {
+    return localStorage.getItem('gameMode') || 'classic';
+  });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     audio.loop = true; // Loop the music for continuous play
@@ -34,66 +44,253 @@ export default function Home() {
 
   const openModal = () => {
     setIsModalOpen(true);
+    // Close the mobile menu when opening modal
+    setIsMenuOpen(false);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  // Update language toggle function to persist in localStorage
+  const toggleLanguage = () => {
+    setLanguage(prevLang => {
+      const newLang = prevLang === 'en' ? 'az' : 'en';
+      localStorage.setItem('preferredLanguage', newLang);
+      return newLang;
+    });
+  };
+
+  // Add function to handle game mode change
+  const handleGameModeChange = (event) => {
+    const newMode = event.target.value;
+    setGameMode(newMode);
+    localStorage.setItem('gameMode', newMode);
+  };
+
+  // Update translations object with Azerbaijani
+  const translations = {
+    en: {
+      title: 'Spy Game',
+      subtitle: 'No one should know that you are a spy!',
+      whatOurAim: 'What Our Aim',
+      playMusic: 'Play Music',
+      pauseMusic: 'Pause Music',
+      usedWords: 'Used words',
+      remainingWords: 'Remaining words',
+      resetGame: 'Reset Game',
+      modalTitle: 'What Our Aim Is',
+      modalContent: 'The "Spy" game was created with a simple yet powerful goal: to bring people together through an engaging and fun experience...',
+      close: 'Close',
+      gameMode: 'Game Mode',
+      classicMode: 'Classic Mode',
+      relatedWordsMode: 'Related Words Mode',
+      classicModeDescription: 'Classic spy game with single word per player',
+      relatedWordsDescription: 'Spy game with related words shown under spy word'
+    },
+    az: {
+      title: 'Casus Oyunu',
+      subtitle: 'Heç kim bilməməlidir ki, sən casussan!',
+      whatOurAim: 'Məqsədimiz Nədir',
+      playMusic: 'Musiqini Başlat',
+      pauseMusic: 'Musiqini Dayandır',
+      usedWords: 'İstifadə edilmiş sözlər',
+      remainingWords: 'Qalan sözlər',
+      resetGame: 'Oyunu Sıfırla',
+      modalTitle: 'Məqsədimiz Nədir',
+      modalContent: '"Casus" oyunu insanları maraqlı və əyləncəli bir təcrübə ilə bir araya gətirmək üçün sadə, lakin güclü bir məqsədlə yaradılıb...',
+      close: 'Bağla',
+      gameMode: 'Oyun Rejimi',
+      classicMode: 'Klassik Rejim',
+      relatedWordsMode: 'Əlaqəli Sözlər Rejimi',
+      classicModeDescription: 'Hər oyunçu üçün tək söz olan klassik casus oyunu',
+      relatedWordsDescription: 'Casus sözün altında əlaqəli sözlərin göstərildiyi oyun'
+    }
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && 
+          !menuRef.current.contains(event.target) && 
+          !event.target.closest('.hamburger-menu')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMenuOpen(prevState => !prevState);
+  };
+
+  // Handle clicks on menu items
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <div className="spy-home">
-      <div className="spy-header">
-        {/* Logo Section */}
-        <div className="spy-logo-container">
-          <img src={SpyLogo} alt="Spy Game Logo" className="spy-logo" />
+    <div className="home-container">
+      <div className="home-overlay"></div>
+      
+      <nav className="navbar">
+        <div className="navbar-brand">
+          <img src={SpyLogo} alt="Spy Game Logo" className="navbar-logo" />
+          <h1 className="navbar-title">{translations[language].title}</h1>
         </div>
+        
+        {/* Desktop Navigation */}
+        <div className="navbar-desktop">
+          <div className="navbar-item mode-selector">
+            <select 
+              id="gameModeDesktop" 
+              value={gameMode} 
+              onChange={handleGameModeChange}
+              className="navbar-select"
+              title={translations[language].gameMode}
+            >
+              <option value="classic">{translations[language].classicMode}</option>
+              <option value="related">{translations[language].relatedWordsMode}</option>
+            </select>
+          </div>
 
-        {/* Title and Subtitle */}
-        <div className="spy-header-text">
-          <h1 className="spy-title">Spy Game</h1>
-          <p className="spy-subtitle">No one should know that you are a spy!</p>
-        </div>
-      </div>
+          <button 
+            className="navbar-item language-btn" 
+            onClick={toggleLanguage}
+            title={language === 'en' ? 'Switch to Azerbaijani' : 'Switch to English'}
+          >
+            {language === 'en' ? 'AZ' : 'EN'}
+          </button>
 
-      {/* Menu Section */}
-      <div className="spy-menu">
-        <button className="spy-menu-item" onClick={openModal}>What Our Aim</button>
-      </div>
+          <button 
+            className="navbar-item info-btn" 
+            onClick={openModal}
+            title={translations[language].whatOurAim}
+          >
+            <span className="material-icons">info</span>
+          </button>
 
-      {/* Music Toggle Button */}
-      <button className="spy-music-button" onClick={toggleMusic}>
-        {isPlaying ? 'Pause Music' : 'Play Music'}
-      </button>
-
-      {/* Game Status Section */}
-      {getLocalUsedWords()?.length > 0 && (
-        <div className="spy-status">
-          <p>
-            Used words: <strong>{getLocalUsedWords()?.length}</strong>
-          </p>
-          <p>
-            Remaining words: <strong>{words?.length - getLocalUsedWords()?.length}</strong>
-          </p>
-          <button className="spy-clear-button" onClick={clearLocal}>
-            Reset Game
+          <button 
+            className="navbar-item music-btn" 
+            onClick={toggleMusic}
+            title={isPlaying ? translations[language].pauseMusic : translations[language].playMusic}
+          >
+            <span className="material-icons">
+              {isPlaying ? 'music_off' : 'music_note'}
+            </span>
           </button>
         </div>
-      )}
+        
+        {/* Mobile Hamburger Button */}
+        <button 
+          className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+          type="button"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-      {/* Game Setup Form */}
-      <div className="spy-game-setup">
-        <Form />
-      </div>
+        {/* Mobile Menu */}
+        <div 
+          ref={menuRef}
+          className={`navbar-mobile ${isMenuOpen ? 'open' : ''}`}
+        >
+          <div className="navbar-item mode-selector">
+            <label htmlFor="gameMode">{translations[language].gameMode}</label>
+            <select 
+              id="gameMode" 
+              value={gameMode} 
+              onChange={(e) => {
+                handleGameModeChange(e);
+                handleMenuItemClick();
+              }}
+              className="navbar-select"
+            >
+              <option value="classic">{translations[language].classicMode}</option>
+              <option value="related">{translations[language].relatedWordsMode}</option>
+            </select>
+          </div>
 
-      {/* Modal for "What Our Aim" */}
+          <div className="navbar-actions">
+            <button 
+              className="navbar-item music-toggle" 
+              onClick={() => {
+                toggleMusic();
+                handleMenuItemClick();
+              }}
+            >
+              <span className="material-icons">
+                {isPlaying ? 'music_off' : 'music_note'}
+              </span>
+              <span className="button-text">
+                {isPlaying ? translations[language].pauseMusic : translations[language].playMusic}
+              </span>
+            </button>
+
+            <button 
+              className="navbar-item about-btn" 
+              onClick={() => {
+                openModal();
+                handleMenuItemClick();
+              }}
+            >
+              <span className="material-icons">info</span>
+              <span className="button-text">{translations[language].whatOurAim}</span>
+            </button>
+
+            <button 
+              className="navbar-item language-toggle" 
+              onClick={() => {
+                toggleLanguage();
+                handleMenuItemClick();
+              }}
+            >
+              <span className="button-text">
+                {language === 'en' ? 'Switch to Azerbaijani' : 'Switch to English'}
+              </span>
+              <span className="language-code">{language === 'en' ? 'AZ' : 'EN'}</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="home-content">
+        <section className="game-setup">
+          <Form language={language} gameMode={gameMode} />
+        </section>
+
+        {getLocalUsedWords()?.length > 0 && (
+          <section className="game-stats">
+            <div className="stat-card">
+              <span className="stat-label">{translations[language].usedWords}</span>
+              <span className="stat-value">{getLocalUsedWords()?.length}</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">{translations[language].remainingWords}</span>
+              <span className="stat-value">{words?.length - getLocalUsedWords()?.length}</span>
+            </div>
+            <button className="reset-button" onClick={clearLocal}>
+              {translations[language].resetGame}
+            </button>
+          </section>
+        )}
+      </main>
+
       {isModalOpen && (
-        <div className="spy-modal-overlay">
-          <div className="spy-modal-content">
-            <h2>What Our Aim Is</h2>
-            <p>The "Spy" game was created with a simple yet powerful goal: to bring people together through an engaging and fun experience. After a long day of work, it's important to have moments of joy and relaxation. "Spy" offers a perfect opportunity to unwind, enjoy, and bond with others.
-              This game is not just about solving puzzles or completing missions; it’s about creating connections. By playing together, people can communicate, collaborate, and build camaraderie in a lighthearted, interactive setting. Whether you’re with friends, family, or colleagues, "Spy" fosters an environment where everyone can have fun, laugh, and connect—ultimately making each interaction more enjoyable.
-              We believe that through games like "Spy," we can make people’s lives more enjoyable and fulfilling by providing a shared space for communication, excitement, and happiness after a productive day.</p>
-            <button className="spy-close-modal" onClick={closeModal}>Close</button>
+        <div className="modal-backdrop" onClick={closeModal}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h2>{translations[language].modalTitle}</h2>
+            <p>{translations[language].modalContent}</p>
+            <button className="modal-close" onClick={closeModal}>
+              {translations[language].close}
+            </button>
           </div>
         </div>
       )}

@@ -44,7 +44,9 @@ const Game = () => {
 const [randomWord, setRandomWord] = useState("");
   useEffect(() => {
     const language = localStorage.getItem('preferredLanguage') || 'az';
-    const wordList = language === 'az' ? wordSets.words : wordSets.englishWords;
+    const wordList = language === 'az' ? wordSets.words 
+                  : language === 'tr' ? wordSets.turkishWords 
+                  : wordSets.englishWords;
     
     const randomWord = filterWords(wordList)[Math.floor(Math.random() * wordList.length)];
     setRandomWord(randomWord)

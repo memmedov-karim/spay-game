@@ -5,25 +5,20 @@ import { getLocalUsedWords } from '../../utils';
 import { words } from '../../data/words';
 import SpySound from "../../assets/spy.mp3";
 import SpyLogo from "../../assets/spy-logo.png";
+import { translations } from '../../data/words';
 import './Home.css';
 
 export default function Home() {
   const [audio] = useState(new Audio(SpySound));
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-  // Initialize language state from localStorage or default to 'en'
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('preferredLanguage') || 'en';
-  });
-  // Add new state for game mode
-  const [gameMode, setGameMode] = useState(() => {
-    return localStorage.getItem('gameMode') || 'classic';
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [language, setLanguage] = useState(() => localStorage.getItem('preferredLanguage') || 'en');
+  const [gameMode, setGameMode] = useState(() => localStorage.getItem('gameMode') || 'classic');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
-    audio.loop = true; // Loop the music for continuous play
+    audio.loop = true;
     audio.oncanplaythrough = () => console.log('Audio loaded successfully');
     audio.onerror = (e) => console.error('Error loading audio:', e);
   }, [audio]);
@@ -44,7 +39,6 @@ export default function Home() {
 
   const openModal = () => {
     setIsModalOpen(true);
-    // Close the mobile menu when opening modal
     setIsMenuOpen(false);
   };
 
@@ -52,63 +46,20 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
-  // Update language toggle function to persist in localStorage
-  const toggleLanguage = () => {
-    setLanguage(prevLang => {
-      const newLang = prevLang === 'en' ? 'az' : 'en';
-      localStorage.setItem('preferredLanguage', newLang);
-      return newLang;
-    });
+  const handleLanguageChange = (event) => {
+    const newLang = event.target.value;
+    setLanguage(newLang);
+    localStorage.setItem('preferredLanguage', newLang);
   };
 
-  // Add function to handle game mode change
   const handleGameModeChange = (event) => {
     const newMode = event.target.value;
     setGameMode(newMode);
     localStorage.setItem('gameMode', newMode);
   };
 
-  // Update translations object with Azerbaijani
-  const translations = {
-    en: {
-      title: 'Spy Game',
-      subtitle: 'No one should know that you are a spy!',
-      whatOurAim: 'What Our Aim',
-      playMusic: 'Play Music',
-      pauseMusic: 'Pause Music',
-      usedWords: 'Used words',
-      remainingWords: 'Remaining words',
-      resetGame: 'Reset Game',
-      modalTitle: 'What Our Aim Is',
-      modalContent: 'The "Spy" game was created with a simple yet powerful goal: to bring people together through an engaging and fun experience...',
-      close: 'Close',
-      gameMode: 'Game Mode',
-      classicMode: 'Classic Mode',
-      relatedWordsMode: 'Related Words Mode',
-      classicModeDescription: 'Classic spy game with single word per player',
-      relatedWordsDescription: 'Spy game with related words shown under spy word'
-    },
-    az: {
-      title: 'Casus Oyunu',
-      subtitle: 'Heç kim bilməməlidir ki, sən casussan!',
-      whatOurAim: 'Məqsədimiz Nədir',
-      playMusic: 'Musiqini Başlat',
-      pauseMusic: 'Musiqini Dayandır',
-      usedWords: 'İstifadə edilmiş sözlər',
-      remainingWords: 'Qalan sözlər',
-      resetGame: 'Oyunu Sıfırla',
-      modalTitle: 'Məqsədimiz Nədir',
-      modalContent: '"Casus" oyunu insanları maraqlı və əyləncəli bir təcrübə ilə bir araya gətirmək üçün sadə, lakin güclü bir məqsədlə yaradılıb...',
-      close: 'Bağla',
-      gameMode: 'Oyun Rejimi',
-      classicMode: 'Klassik Rejim',
-      relatedWordsMode: 'Əlaqəli Sözlər Rejimi',
-      classicModeDescription: 'Hər oyunçu üçün tək söz olan klassik casus oyunu',
-      relatedWordsDescription: 'Casus sözün altında əlaqəli sözlərin göstərildiyi oyun'
-    }
-  };
+ 
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && 
@@ -128,7 +79,6 @@ export default function Home() {
     setIsMenuOpen(prevState => !prevState);
   };
 
-  // Handle clicks on menu items
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
   };
@@ -143,7 +93,6 @@ export default function Home() {
           <h1 className="navbar-title">{translations[language].title}</h1>
         </div>
         
-        {/* Desktop Navigation */}
         <div className="navbar-desktop">
           <div className="navbar-item mode-selector">
             <select 
@@ -158,13 +107,16 @@ export default function Home() {
             </select>
           </div>
 
-          <button 
-            className="navbar-item language-btn" 
-            onClick={toggleLanguage}
-            title={language === 'en' ? 'Switch to Azerbaijani' : 'Switch to English'}
+          <select 
+            className="navbar-item language-select" 
+            value={language} 
+            onChange={handleLanguageChange}
+            title="Select Language"
           >
-            {language === 'en' ? 'AZ' : 'EN'}
-          </button>
+            <option value="en">English</option>
+            <option value="az">Azerbaijani</option>
+            <option value="tr">Turkish</option>
+          </select>
 
           <button 
             className="navbar-item info-btn" 
@@ -185,7 +137,6 @@ export default function Home() {
           </button>
         </div>
         
-        {/* Mobile Hamburger Button */}
         <button 
           className={`hamburger-menu ${isMenuOpen ? 'open' : ''}`}
           onClick={toggleMenu}
@@ -197,7 +148,6 @@ export default function Home() {
           <span></span>
         </button>
 
-        {/* Mobile Menu */}
         <div 
           ref={menuRef}
           className={`navbar-mobile ${isMenuOpen ? 'open' : ''}`}
@@ -245,18 +195,19 @@ export default function Home() {
               <span className="button-text">{translations[language].whatOurAim}</span>
             </button>
 
-            <button 
-              className="navbar-item language-toggle" 
-              onClick={() => {
-                toggleLanguage();
+            <select 
+              className="navbar-item language-select" 
+              value={language} 
+              onChange={(e) => {
+                handleLanguageChange(e);
                 handleMenuItemClick();
               }}
+              title="Select Language"
             >
-              <span className="button-text">
-                {language === 'en' ? 'Switch to Azerbaijani' : 'Switch to English'}
-              </span>
-              <span className="language-code">{language === 'en' ? 'AZ' : 'EN'}</span>
-            </button>
+              <option value="en">English</option>
+              <option value="az">Azerbaijani</option>
+              <option value="tr">Turkish</option>
+            </select>
           </div>
         </div>
       </nav>

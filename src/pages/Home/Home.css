@@ -442,6 +442,25 @@
   display: none;
 }
 
+.navbar-select, 
+.language-select {
+  background-color: #0f3460; /* Oyun modu seçeneği ile aynı renk */
+  color: white; /* Yazı rengi beyaz */
+  border: 1px solid #e94560;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+}
+
+.navbar-select option, 
+.language-select option {
+  background-color: #1a1a2e; /* Açılır menü arka planı */
+  color: white; /* Yazı rengi */
+  padding: 0.5rem;
+}
+
 .navbar-desktop .navbar-select option:hover,
 .navbar-desktop .navbar-select option:focus,
 .navbar-desktop .navbar-select option:active,

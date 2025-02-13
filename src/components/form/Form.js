@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserSecret, FaUsers, FaPlay } from 'react-icons/fa';
 import './Form.css';
-
+import { formTranslations } from '../../data/words';
 export default function Form({ language, gameMode }) {
   const [number1, setNumber1] = useState('');
   const [number2, setNumber2] = useState('');
@@ -15,33 +15,12 @@ export default function Form({ language, gameMode }) {
     }
   };
 
-  const translations = {
-    en: {
-      title: 'Spy Game Setup',
-      subtitle: 'Prepare the game by entering participant and spy counts!',
-      participants: 'Total Participants',
-      spies: 'Spy Count',
-      startGame: 'Start Game',
-      participantsPlaceholder: 'Enter the number of players...',
-      spiesPlaceholder: 'Enter the number of spies...'
-    },
-    az: {
-      title: 'Casus Oyunu Quraşdırması',
-      subtitle: 'İştirakçı və casus saylarını daxil edərək oyunu hazırlayın!',
-      participants: 'Ümumi İştirakçılar',
-      spies: 'Casus Sayı',
-      startGame: 'Oyunu Başlat',
-      participantsPlaceholder: 'Oyunçu sayını daxil edin...',
-      spiesPlaceholder: 'Casus sayını daxil edin...'
-    }
-  };
-
   return (
     <div className="spy-form-container">
       <div className="spy-form-header">
         <div className="spy-logo-animation"></div>
-        <h1 className="spy-form-title">{translations[language].title}</h1>
-        <p className="spy-form-subtitle">{translations[language].subtitle}</p>
+        <h1 className="spy-form-title">{formTranslations[language].title}</h1>
+        <p className="spy-form-subtitle">{formTranslations[language].subtitle}</p>
       </div>
       
       <form className="spy-form" onSubmit={handleSubmit}>
@@ -54,11 +33,11 @@ export default function Form({ language, gameMode }) {
               min={1}
               value={number1}
               onChange={(e) => setNumber1(e.target.value === "0" ? "1" : e.target.value)}
-              placeholder={translations[language].participantsPlaceholder}
+              placeholder={formTranslations[language].participantsPlaceholder}
               className="spy-input"
             />
           </div>
-          <label htmlFor="number1">{translations[language].participants}</label>
+          <label htmlFor="number1">{formTranslations[language].participants}</label>
         </div>
 
         <div className="form-group">
@@ -70,11 +49,11 @@ export default function Form({ language, gameMode }) {
               min={0}
               value={number2}
               onChange={(e) => setNumber2(e.target.value)}
-              placeholder={translations[language].spiesPlaceholder}
+              placeholder={formTranslations[language].spiesPlaceholder}
               className="spy-input"
             />
           </div>
-          <label htmlFor="number2">{translations[language].spies}</label>
+          <label htmlFor="number2">{formTranslations[language].spies}</label>
         </div>
 
         <button 
@@ -83,7 +62,7 @@ export default function Form({ language, gameMode }) {
           disabled={!(parseInt(number1) - parseInt(number2) >= 0)}
         >
           <FaPlay className="play-icon" />
-          <span>{translations[language].startGame}</span>
+          <span>{formTranslations[language].startGame}</span>
         </button>
       </form>
     </div>

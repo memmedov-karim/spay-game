@@ -221,3 +221,36 @@ label {
   }
 }
 
+@media (max-width: 500px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .spy-form-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 0 10px;
+    margin: 0 auto;
+  }
+
+  .spy-form {
+    width: 100%;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .spy-input {
+    width: 100%;
+  }
+
+  .start-game-button {
+    width: 100%;
+  }
+}
+

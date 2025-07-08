@@ -42,6 +42,7 @@ const Game = () => {
   const [timerSeconds, setTimerSeconds] = useState(240);
   const lng = localStorage.getItem('preferredLanguage') || 'az';
 const [randomWord, setRandomWord] = useState("");
+  const [isRevealing, setIsRevealing] = useState(false);
   useEffect(() => {
     const language = localStorage.getItem('preferredLanguage') || 'az';
     const wordList = language === 'az' ? wordSets.words 
@@ -68,15 +69,20 @@ const [randomWord, setRandomWord] = useState("");
   }, [playerCount, spayCount]);
 
   const handleCardClick = () => {
-    if (showWord) {
-      setShowWord(false);
-      if (currentWordIndex + 1 === combinedWords.length) {
-        setGameStarted(true);
-      } else {
-        setCurrentWordIndex(currentWordIndex + 1);
-      }
-    } else {
+    if (isRevealing) return; // Prevent clicks during animation
+    if (!showWord) {
       setShowWord(true);
+    } else {
+      setIsRevealing(true);
+      setShowWord(false);
+      setTimeout(() => {
+        setIsRevealing(false);
+        if (currentWordIndex + 1 === combinedWords.length) {
+          setGameStarted(true);
+        } else {
+          setCurrentWordIndex(currentWordIndex + 1);
+        }
+      }, 600); // match flip animation duration
     }
   };
 
@@ -115,24 +121,27 @@ const [randomWord, setRandomWord] = useState("");
       <div className="spy-game-content">
         {!gameStarted ? (
           <div className="spy-card-container" onClick={handleCardClick}>
-            <strong className="spy-card-text">
-              {showWord ? (
-                combinedWords[currentWordIndex] === "😎" ? (
-                  <SpyWordDisplay 
-                    relatedWords={wordSets.getRelatedWords(randomWord, lng)}
-                  />
-                ) : (
-                  <div className="regular-player-word">
-                    {combinedWords[currentWordIndex]}
+            <div className={`flip-card${showWord ? ' flipped' : ''}`}> 
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                  <div className="player-prompt">
+                    <span className="player-number">Player {currentWordIndex + 1}</span>
+                    <span className="tap-instruction">Tap to reveal your word</span>
                   </div>
-                )
-              ) : (
-                <div className="player-prompt">
-                  <span className="player-number">Player {currentWordIndex + 1}</span>
-                  <span className="tap-instruction">Tap to reveal your word</span>
                 </div>
-              )}
-            </strong>
+                <div className="flip-card-back">
+                  {combinedWords[currentWordIndex] === "😎" ? (
+                    <SpyWordDisplay 
+                      relatedWords={wordSets.getRelatedWords(randomWord, lng)}
+                    />
+                  ) : (
+                    <div className="regular-player-word">
+                      {combinedWords[currentWordIndex]}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="spy-timer-container">

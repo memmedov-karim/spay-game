@@ -1,0 +1,28 @@
+.about-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  font-size: 1.1rem;
+}
+.about-container h2 {
+  margin-bottom: 20px;
+  color: #2d3a4a;
+  text-align: center;
+}
+.about-container ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+.about-winner {
+  font-weight: bold;
+  color: #1a7f37;
+  margin-bottom: 10px;
+}
+.about-note {
+  color: #555;
+  font-style: italic;
+  text-align: center;
+} 

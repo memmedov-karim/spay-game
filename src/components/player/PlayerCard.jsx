@@ -5,6 +5,16 @@ import './Game.css';
 import { words } from '../../data/words';
 import { addToLocal, filterWords } from '../../utils';
 
+// Fisher-Yates shuffle for better randomness
+function shuffleArray(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 const PlayerCard = ({ word, onClick, isFlipped }) => {
   return (
     <div className={`player-card ${isFlipped ? 'flipped' : ''}`} onClick={onClick}>
@@ -27,11 +37,12 @@ const Game = () => {
   const [timerSeconds, setTimerSeconds] = useState(240); // 4 minutes in seconds
 
   useEffect(() => {
-    const randomWord = filterWords(words)[Math.floor(Math.random() * words.length)];
+    const filtered = filterWords(words);
+    const randomWord = filtered[Math.floor(Math.random() * filtered.length)];
     addToLocal(randomWord);
     const spayWords = Array(spayCount).fill("😎");
     const randomWords = Array(playerCount - spayCount).fill(randomWord);
-    const shuffledWords = [...spayWords, ...randomWords].sort(() => Math.random() - 0.5);
+    const shuffledWords = shuffleArray([...spayWords, ...randomWords]);
     setCombinedWords(shuffledWords);
   }, [playerCount, spayCount]);
 

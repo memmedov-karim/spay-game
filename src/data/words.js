@@ -3274,3 +3274,50 @@ export const formTranslations = {
     spiesPlaceholder: 'Casus sayısını girin...'
   }
 };
+
+// src/data/aboutContent.js
+
+export const aboutContent = {
+  en: {
+    title: 'How to Play Spy Game',
+    steps: [
+      '1. Gather all players and decide the total number of players and spies.',
+      '2. Enter the numbers on the home page and start the game.',
+      '3. Each player gets a word. Only the spies get a different word or no word.',
+      '4. Players take turns describing their word without saying it directly.',
+      '5. The aim for non-spies is to find out who the spies are. The spies try to blend in.',
+      '6. After discussion, players vote on who they think the spies are.',
+      '7. If all spies are found, non-spies win. If not, spies win!',
+    ],
+    winner: 'The winner is the team that achieves their goal: Spies stay hidden, or non-spies find all spies!',
+    note: 'Tip: Be creative and careful with your descriptions!',
+  },
+  az: {
+    title: 'Casus Oyununu Necə Oynamaq Olar',
+    steps: [
+      '1. Bütün oyunçuları toplayın və ümumi oyunçu və casus sayını müəyyən edin.',
+      '2. Ana səhifədə bu rəqəmləri daxil edib oyuna başlayın.',
+      '3. Hər oyunçuya bir söz verilir. Yalnız casuslar fərqli söz və ya heç bir söz almır.',
+      '4. Oyunçular öz sözlərini birbaşa demədən təsvir edirlər.',
+      '5. Casus olmayanların məqsədi casusları tapmaqdır. Casuslar isə gizlənməyə çalışır.',
+      '6. Müzakirədən sonra oyunçular casus olduğunu düşündüklərinə səs verirlər.',
+      '7. Bütün casuslar tapılarsa, casus olmayanlar qalib gəlir. Əks halda, casuslar qalibdir!',
+    ],
+    winner: 'Qalib, məqsədinə çatan komandadır: Casuslar gizli qalırsa və ya casus olmayanlar hamısını tapırsa!',
+    note: 'Məsləhət: Təsvirlərinizdə yaradıcı və diqqətli olun!',
+  },
+  tr: {
+    title: 'Casus Oyunu Nasıl Oynanır',
+    steps: [
+      '1. Tüm oyuncuları toplayın ve toplam oyuncu ve casus sayısını belirleyin.',
+      '2. Ana sayfada bu sayıları girip oyunu başlatın.',
+      '3. Her oyuncuya bir kelime verilir. Sadece casuslar farklı kelime veya hiç kelime almaz.',
+      '4. Oyuncular kelimelerini doğrudan söylemeden tarif ederler.',
+      '5. Casus olmayanların amacı casusları bulmaktır. Casuslar ise gizlenmeye çalışır.',
+      '6. Tartışmadan sonra oyuncular casus olduğunu düşündüklerine oy verirler.',
+      '7. Tüm casuslar bulunursa, casus olmayanlar kazanır. Aksi halde casuslar kazanır!',
+    ],
+    winner: 'Kazanan, hedefine ulaşan takımdır: Casuslar gizli kalırsa veya casus olmayanlar hepsini bulursa!',
+    note: 'İpucu: Tariflerinizde yaratıcı ve dikkatli olun!',
+  },
+};

@@ -1,25 +1,35 @@
+.super-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #101820 0%, #1a2a2a 100%);
+}
+
 .spy-form-container {
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 2.5rem;
-  background: rgba(20, 20, 20, 0.95);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-              inset 0 2px 15px rgba(0, 255, 136, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 255, 136, 0.1);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  background: rgba(20, 20, 20, 0.98);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+              0 1.5px 12px rgba(0, 255, 136, 0.08);
+  border: 1.5px solid rgba(0, 255, 136, 0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .spy-form-header {
   text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
+  margin-bottom: 2.5rem;
 }
 
 .spy-logo-animation {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1.5rem;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.2rem;
   background: url('/src/assets/spy-logo.png') no-repeat center;
   background-size: contain;
   animation: pulse 2s infinite;
@@ -28,31 +38,88 @@
 
 .spy-form-title {
   color: #00ff88;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+  font-size: 2.2rem;
+  margin-bottom: 0.7rem;
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
   font-weight: 700;
   letter-spacing: 1px;
 }
 
 .spy-form-subtitle {
-  color: #a0a0a0;
-  font-size: 1.1rem;
+  color: #b0b0b0;
+  font-size: 1.08rem;
   line-height: 1.5;
-  max-width: 80%;
+  max-width: 90%;
   margin: 0 auto;
 }
 
 .spy-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .spy-form {
+    flex-direction: row;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+  .form-group {
+    flex: 1 1 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .spy-form-container {
+    max-width: 600px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 2px 18px rgba(0,255,136,0.12);
+  }
+  .spy-form-header {
+    margin-bottom: 3rem;
+  }
+  .spy-logo-animation {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 2rem;
+  }
+  .spy-form-title {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .spy-form-subtitle {
+    font-size: 1.2rem;
+    max-width: 80%;
+  }
+  .spy-form {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: flex-end;
+    margin-bottom: 2.2rem;
+  }
+  .form-group {
+    flex: 1 1 0;
+    margin-bottom: 0;
+  }
+  .start-game-button {
+    width: auto;
+    min-width: 180px;
+    display: block;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    padding: 1.2rem 2.2rem;
+    margin-top: 0;
+    box-shadow: 0 2px 16px rgba(0,255,136,0.18);
+  }
 }
 
 .form-group {
   display: flex;
   flex-direction: column-reverse;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .input-icon {
@@ -63,77 +130,79 @@
 
 .icon {
   position: absolute;
-  left: 1.2rem;
+  left: 1.1rem;
   color: #00ff88;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   pointer-events: none;
-  opacity: 0.8;
+  opacity: 0.85;
   filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.3));
 }
 
 .spy-input {
   width: 100%;
-  padding: 1.2rem 1.2rem 1.2rem 3.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px solid rgba(0, 255, 136, 0.2);
-  border-radius: 12px;
+  padding: 1.1rem 1.1rem 1.1rem 3.2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(0, 255, 136, 0.18);
+  border-radius: 11px;
   color: #fff;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1.08rem;
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.09);
 }
 
 .spy-input:hover:not(:focus) {
-  border-color: rgba(0, 255, 136, 0.3);
+  border-color: rgba(0, 255, 136, 0.28);
 }
 
 .spy-input:focus {
-  outline: none;
+  outline: 2px solid #00ff88;
   border-color: #00ff88;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2),
-              inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.18),
+              0 2px 4px rgba(0, 0, 0, 0.09);
 }
 
 .spy-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.32);
   font-size: 1rem;
 }
 
 label {
   color: #00ff88;
-  font-size: 0.9rem;
+  font-size: 0.93rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   margin-left: 0.5rem;
-  transition: all 0.3s ease;
+  transition: color 0.2s;
 }
 
 .form-group:focus-within label {
   color: #00ff88;
-  text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+  text-shadow: 0 0 7px rgba(0, 255, 136, 0.4);
 }
 
 .start-game-button {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1.2rem;
+  gap: 0.7rem;
+  padding: 1.15rem;
   background: linear-gradient(45deg, #00ff88, #00cc6f);
   border: none;
-  border-radius: 12px;
+  border-radius: 11px;
   color: #000;
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.22s cubic-bezier(.4,0,.2,1);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,255,136,0.13);
 }
 
 .start-game-button::before {
@@ -146,7 +215,7 @@ label {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.18),
     transparent
   );
   transition: 0.5s;
@@ -157,8 +226,8 @@ label {
 }
 
 .start-game-button:hover:not(.disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 5px 20px rgba(0, 255, 136, 0.32);
 }
 
 .start-game-button.disabled {
@@ -170,7 +239,7 @@ label {
 }
 
 .play-icon {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 
 @keyframes pulse {
@@ -188,69 +257,25 @@ label {
   }
 }
 
-/* Responsive design */
+/* Responsive tweaks */
 @media (max-width: 600px) {
   .spy-form-container {
-    margin: 1rem;
-    padding: 1.5rem;
+    padding: 1.2rem 0.5rem;
     border-radius: 15px;
   }
-
   .spy-form-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
-
-  .spy-form-subtitle {
-    font-size: 1rem;
-    max-width: 95%;
-  }
-
   .spy-logo-animation {
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
   }
-
-  .spy-input {
-    padding: 1rem 1rem 1rem 3rem;
+  .spy-form-header {
+    margin-bottom: 1.2rem;
+  }
+  .start-game-button {
     font-size: 1rem;
-  }
-
-  .start-game-button {
     padding: 1rem;
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 500px) {
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-  }
-
-  .spy-form-container {
-    width: 100%;
-    max-width: 500px;
-    padding: 0 10px;
-    margin: 0 auto;
-  }
-
-  .spy-form {
-    width: 100%;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-
-  .spy-input {
-    width: 100%;
-  }
-
-  .start-game-button {
-    width: 100%;
   }
 }
 

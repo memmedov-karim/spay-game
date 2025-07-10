@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home.jsx";
-import Game from "./pages/Game/Game.jsx";
+// import Game from "./pages/Game/Game.jsx";
 import Footer from "./components/footer/Footer.js";
 import About from "./pages/About/About.jsx";
 import { useState, useEffect } from "react";
 import SpySound from "./assets/spy.mp3";
 
 import "./App.css";
+import Game from "./components/player/PlayerCard.jsx";
 function App() {
   const [audio] = useState(new Audio(SpySound));
   const [isPlaying, setIsPlaying] = useState(false);

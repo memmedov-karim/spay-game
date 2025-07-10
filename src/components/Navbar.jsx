@@ -58,9 +58,9 @@ export default function Navbar({
       value: language,
       onChange: onLanguageChange,
       options: [
-        { value: 'en', label: 'English' },
-        { value: 'az', label: 'Azerbaijani' },
-        { value: 'tr', label: 'Turkish' }
+        { value: 'en', label: 'Eng' },
+        { value: 'az', label: 'Az' },
+        { value: 'tr', label: 'Tr' }
       ],
       label: t[language].language || 'Language'
     },

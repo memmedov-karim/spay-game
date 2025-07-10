@@ -1,37 +1,546 @@
+/* Glassmorphism, 3D, and spy theme for PlayerCard */
 .player-card {
-    width: 150px;
-    height: 200px;
-    perspective: 1000px;
-    cursor: pointer;
+  width: 320px;
+  max-width: 90vw;
+  height: 440px;
+  perspective: 1600px;
+  cursor: pointer;
+  position: relative;
+  margin: 2rem auto;
+  transition: box-shadow 0.3s, transform 0.3s;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 #000a, 0 0 0 2px #39ff1440;
+  border-radius: 24px;
+  background: none;
+  outline: none;
+  will-change: transform, box-shadow;
+  animation: spy-card-entry 0.7s cubic-bezier(.4,2,.3,1) both;
+}
+.player-card:active, .player-card:focus {
+  box-shadow: 0 12px 40px 0 #39ff1440, 0 0 0 4px #00eaff80;
+  transform: scale(1.03) rotateZ(-1deg);
+}
+.player-card:hover {
+  transform: scale(1.04) rotateY(4deg) rotateX(2deg);
+  box-shadow: 0 16px 48px 0 #39ff1440, 0 0 0 6px #00eaff80;
+}
+
+@keyframes spy-card-entry {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(60px) scale(0.95); }
+  100% { opacity: 1; filter: blur(0); transform: none; }
+}
+
+.spy-glassmorph {
+  background: rgba(18, 24, 38, 0.75);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 1.5px 8px 0 #000a;
+  backdrop-filter: blur(16px) saturate(160%);
+  border: 1.5px solid rgba(57,255,20,0.18);
+}
+
+.player-card .card-front,
+.player-card .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #1a233a 60%, #232b3e 100%);
+  box-shadow: 0 2px 12px 0 #0008;
+  color: #eaffd0;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(.4,2,.3,1), box-shadow 0.3s;
+}
+.player-card .card-front {
+  z-index: 2;
+}
+.player-card .card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #232b3e 60%, #1a233a 100%);
+  color: #39ff14;
+  z-index: 3;
+}
+.player-card.flipped .card-front {
+  transform: rotateY(180deg);
+}
+.player-card.flipped .card-back {
+  transform: rotateY(0);
+}
+
+/* Header: avatar, status, meta */
+.spy-card-header {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+  gap: 1.2rem;
+}
+.spy-avatar-wrapper {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #232b3e 60%, #1a233a 100%);
+  box-shadow: 0 0 0 3px #39ff14, 0 2px 8px #000a;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spy-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(0.1) contrast(1.1);
+}
+.spy-status-indicator {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #181c2a;
+  box-shadow: 0 0 8px 2px #39ff14a0;
+  transition: background 0.3s;
+}
+.spy-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.spy-username {
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  font-size: 1.3rem;
+  color: #39ff14;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 4px #39ff14a0;
+}
+.spy-role {
+  font-size: 1rem;
+  color: #00eaff;
+  font-weight: 600;
+  text-shadow: 0 0 2px #00eaff80;
+}
+
+/* Card body: stats */
+.spy-card-body {
+  padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spy-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 1.1rem;
+  color: #eaffd0;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+}
+
+/* Footer: action icons */
+.spy-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  padding: 0.5rem 1.2rem 1.2rem 1.2rem;
+}
+.spy-card-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 234, 255, 0.08);
+  border-radius: 50%;
+  padding: 0.3rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 0 1.5px #00eaff40;
+  cursor: pointer;
+}
+.spy-card-action-icon:hover {
+  background: #00eaff22;
+  box-shadow: 0 0 0 2.5px #00eaff80;
+}
+
+.spy-card-title {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.7rem;
+  text-shadow: 0 0 6px #00eaff80;
+}
+
+/* Card back content */
+.spy-card-back-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1.2rem;
+  padding: 2.5rem 1.2rem 1.2rem 1.2rem;
+}
+.spy-card-back-title {
+  font-size: 1.3rem;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 6px #00eaff80;
+}
+.spy-card-back-word {
+  font-size: 2.2rem;
+  color: #39ff14;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px #39ff14a0;
+  margin: 0.7rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.spy-card-back-bio {
+  font-size: 1.1rem;
+  color: #eaffd0;
+  text-align: center;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  opacity: 0.85;
+}
+
+/* Micro-interactions: radar, scanlines */
+.spy-card-micro.fx-radar {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, #39ff1440 0%, #232b3e00 80%);
+  box-shadow: 0 0 12px 2px #39ff1440;
+  animation: spy-radar-sweep 2.5s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+@keyframes spy-radar-sweep {
+  0% { box-shadow: 0 0 12px 2px #39ff1440; }
+  50% { box-shadow: 0 0 24px 8px #39ff1440; }
+  100% { box-shadow: 0 0 12px 2px #39ff1440; }
+}
+.spy-card-micro.fx-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 6px,
+    #00eaff0a 7px,
+    transparent 8px
+  );
+  mix-blend-mode: lighten;
+  opacity: 0.7;
+  animation: spy-scanlines-flicker 1.2s steps(2, end) infinite;
+}
+@keyframes spy-scanlines-flicker {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.5; }
+}
+
+/* Rare/legendary card variants */
+.player-card-variant-legendary {
+  box-shadow: 0 0 32px 8px #ffd700cc, 0 8px 32px 0 #39ff1440;
+  border: 2.5px solid #ffd700;
+  background: linear-gradient(135deg, #232b3e 60%, #ffd70022 100%);
+}
+.player-card-variant-epic {
+  box-shadow: 0 0 24px 6px #00eaffcc, 0 8px 32px 0 #39ff1440;
+  border: 2.5px solid #00eaff;
+  background: linear-gradient(135deg, #232b3e 60%, #00eaff22 100%);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .player-card {
+    width: 98vw;
+    height: 320px;
+    min-height: 220px;
+    border-radius: 16px;
   }
-  
-  .player-card .card-front,
-  .player-card .card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    background-color: #4caf50;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: transform 0.6s;
+  .spy-card-header, .spy-card-footer, .spy-card-body, .spy-card-back-content {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
   }
-  
-  .player-card .card-back {
-    transform: rotateY(180deg);
-    background-color: #f44336;
+  .spy-avatar-wrapper {
+    width: 48px; height: 48px;
   }
-  
-  .player-card.flipped .card-front {
-    transform: rotateY(180deg);
+  .spy-avatar {
+    width: 44px; height: 44px;
   }
-  
-  .player-card.flipped .card-back {
-    transform: rotateY(0);
+}
+
+/* Spy Game Page Background */
+.spy-game-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #10131a 0%, #1a233a 100%) fixed;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Premium Restart Button */
+.spy-btn-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  font-size: 1.15rem;
+  color: #fff;
+  background: linear-gradient(90deg, #232b3e 60%, #00eaff 100%);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px 0 #00eaff40, 0 0 0 2px #39ff1440;
+  padding: 0.7em 2.2em;
+  margin: 2.5rem auto 1.5rem auto;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  outline: none;
+  position: relative;
+  z-index: 10;
+}
+.spy-btn-premium:hover, .spy-btn-premium:focus {
+  background: linear-gradient(90deg, #00eaff 0%, #39ff14 100%);
+  box-shadow: 0 4px 24px 0 #39ff14a0, 0 0 0 4px #00eaff80;
+  color: #181c2a;
+  transform: scale(1.04);
+}
+.spy-btn-icon {
+  font-size: 1.3em;
+  color: #39ff14;
+  filter: drop-shadow(0 0 4px #39ff14a0);
+}
+
+/* Turn Banner */
+.spy-turn-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 1.2rem 2rem 1rem 2rem;
+  background: rgba(0, 234, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px 0 #00eaff40, 0 0 0 2px #39ff1440;
+  position: relative;
+  z-index: 5;
+}
+.spy-turn-label {
+  font-size: 1.1rem;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2em;
+  text-shadow: 0 0 6px #00eaff80;
+}
+.spy-turn-player {
+  font-size: 1.5rem;
+  color: #39ff14;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px #39ff14a0;
+}
+.spy-turn-number {
+  color: #ffd700;
+  text-shadow: 0 0 8px #ffd700a0;
+  font-size: 1.6em;
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  .spy-turn-banner {
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    margin-bottom: 1rem;
   }
+  .spy-btn-premium {
+    padding: 0.6em 1.2em;
+    font-size: 1rem;
+  }
+}
+
+/* Game Started Screen */
+.spy-game-started {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 70vh;
+  padding-top: 2.5rem;
+  animation: spy-fadein 0.7s cubic-bezier(.4,2,.3,1);
+}
+@keyframes spy-fadein {
+  0% { opacity: 0; filter: blur(12px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+.spy-game-started-title {
+  font-size: 2.1rem;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 16px #00eaff80;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+.spy-title-icon {
+  font-size: 1.5em;
+  color: #ffd700;
+  filter: drop-shadow(0 0 8px #ffd700a0);
+}
+.spy-timer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 234, 255, 0.10);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 #00eaff40, 0 0 0 2px #39ff1440;
+  padding: 1.1rem 2.5rem 1.1rem 2.5rem;
+  margin-bottom: 2.2rem;
+}
+.spy-timer-label {
+  font-size: 1.1rem;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2em;
+  text-shadow: 0 0 6px #00eaff80;
+}
+.spy-timer-countdown {
+  font-size: 2.5rem;
+  color: #39ff14;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 16px #39ff14a0;
+  margin-top: 0.2em;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+.spy-timer-danger {
+  color: #ff1744;
+  text-shadow: 0 0 16px #ff1744a0;
+  animation: spy-timer-blink 1s steps(2, end) infinite;
+}
+@keyframes spy-timer-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.spy-card-grid-premium {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2.2rem 1.2rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 2.5rem auto;
+  justify-items: center;
+  align-items: stretch;
+  padding: 0 1.2rem;
+}
+.spy-reveal-banner {
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+  color: #ffd700;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.10em;
+  text-shadow: 0 0 16px #ffd700a0;
+  background: rgba(255, 215, 0, 0.08);
+  border-radius: 12px;
+  padding: 0.8em 2em;
+  box-shadow: 0 2px 12px 0 #ffd70040, 0 0 0 2px #ffd70040;
+  animation: spy-reveal-pop 0.7s cubic-bezier(.4,2,.3,1);
+}
+@keyframes spy-reveal-pop {
+  0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .spy-game-started-title {
+    font-size: 1.2rem;
+  }
+  .spy-timer-box {
+    padding: 0.7rem 1.2rem 0.7rem 1.2rem;
+  }
+  .spy-card-grid-premium {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.2rem 0.5rem;
+    padding: 0 0.2rem;
+  }
+  .spy-reveal-banner {
+    font-size: 1.1rem;
+    padding: 0.5em 1em;
+  }
+}
+
+.spy-related-words-chips {
+  display: flex;
+  gap: 0.4em;
+  justify-content: center;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+}
+.spy-related-chip {
+  font-size: 0.85rem;
+  color: #00eaff;
+  background: rgba(0,234,255,0.08);
+  border-radius: 8px;
+  padding: 0.13em 0.7em;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 4px #00eaff40;
+  border: 1px solid #00eaff30;
+  opacity: 0.85;
+  user-select: text;
+}
+
+.spy-flip-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  margin-top: 1.2em;
+  margin-bottom: 0.2em;
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 2.2em;
+  z-index: 30;
+  pointer-events: none;
+}
+.spy-flip-arrow {
+  font-size: 1.5em;
+  color: #00eaff;
+  opacity: 0.7;
+  animation: spy-arrow-bounce 1.2s infinite alternate;
+  filter: drop-shadow(0 0 4px #00eaff80);
+}
+.spy-flip-arrow:last-child {
+  animation-delay: 0.6s;
+}
+@keyframes spy-arrow-bounce {
+  0% { transform: translateX(0); opacity: 0.7; }
+  100% { transform: translateX(0.25em); opacity: 1; }
+}
+.spy-flip-label {
+  font-size: 1.05em;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', 'Fira Mono', monospace;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  text-shadow: 0 0 6px #00eaff80;
+  user-select: none;
+}
   

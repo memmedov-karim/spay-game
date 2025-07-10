@@ -5,7 +5,6 @@ import './PlayerCard.css';
 import * as wordSets from '../../data/words';
 import { addToLocal, filterWords } from '../../utils';
 import spySound from '../../assets/flip-card.mp3';
-import { useSpring, animated } from 'react-spring';
 
 // Fisher-Yates shuffle for better randomness
 function shuffleArray(array) {
@@ -18,148 +17,34 @@ function shuffleArray(array) {
 }
 
 // Redesign PlayerCard for immersive spy dossier look
-const PlayerCard = ({ word, onClick, isFlipped, avatar, username, role, stats, liveStatus, variant, mode, relatedWords, isSpy }) => {
+const PlayerCard = ({ word, onClick, isFlipped, avatar, username, role, stats, liveStatus, variant, mode, relatedWords, isSpy, cardIndex, avatarSeed }) => {
   // Card variant classes for rare/legendary
   const variantClass = variant ? `player-card-variant-${variant}` : '';
   // Live status color
   const statusColor = liveStatus === 'online' ? '#39ff14' : liveStatus === 'in-mission' ? '#ffae00' : '#ff1744';
 
-  const [dragX, setDragX] = React.useState(0);
-  const [isDragging, setIsDragging] = React.useState(false);
-  const [mouseStartX, setMouseStartX] = React.useState(null);
-  const [mouseEndX, setMouseEndX] = React.useState(null);
-  const [touchStartX, setTouchStartX] = React.useState(null);
-  const [touchEndX, setTouchEndX] = React.useState(null);
-
-  // Spring for smooth 3D rotation
-  const [{ y, shadow }, api] = useSpring(() => ({
-    y: 0,
-    shadow: 0,
-    config: { tension: 400, friction: 32 },
-  }));
-
-  // Real-time drag state
-  // const [dragFlipped, setDragFlipped] = React.useState(false); // Removed
-
-  // Handle drag/swipe logic
-  const handleDrag = (dx) => {
-    // Clamp rotation to [-180, 180]
-    const clamped = Math.max(-180, Math.min(180, dx / 2));
-    api.start({ y: clamped, shadow: Math.abs(clamped) });
-    // setDragFlipped(Math.abs(clamped) > 90); // Removed
-  };
-  const handleDragEnd = (dx) => {
-    if (Math.abs(dx) > 60) {
-      // Complete flip
-      api.start({ y: 180, shadow: 30 });
-      setTimeout(() => {
-        api.start({ y: 0, shadow: 0 });
-        setDragX(0);
-        if (!isFlipped) onClick();
-      }, 350);
-    } else {
-      // Spring back
-      api.start({ y: 0, shadow: 0 });
-      setDragX(0);
-      if (isFlipped) onClick();
-    }
-  };
-
-  // Touch events
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.touches[0].clientX);
-    setIsDragging(true);
-  };
-  const handleTouchMove = (e) => {
-    if (!isDragging || touchStartX === null) return;
-    const dx = e.touches[0].clientX - touchStartX;
-    setDragX(dx);
-    handleDrag(dx);
-  };
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    if (touchStartX === null || dragX === 0) {
-      api.start({ y: 0, shadow: 0 });
-      setTouchStartX(null);
-      setTouchEndX(null);
-      setDragX(0);
-      // setDragFlipped(false); // Removed
-      return;
-    }
-    handleDragEnd(dragX);
-    setTouchStartX(null);
-    setTouchEndX(null);
-  };
-
-  // Mouse events
-  const handleMouseDown = (e) => {
-    setMouseStartX(e.clientX);
-    setIsDragging(true);
-  };
-  const handleMouseMove = (e) => {
-    if (!isDragging || mouseStartX === null) return;
-    const dx = e.clientX - mouseStartX;
-    setDragX(dx);
-    handleDrag(dx);
-  };
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (mouseStartX === null || dragX === 0) {
-      api.start({ y: 0, shadow: 0 });
-      setMouseStartX(null);
-      setMouseEndX(null);
-      setDragX(0);
-      // setDragFlipped(false); // Removed
-      return;
-    }
-    handleDragEnd(dragX);
-    setMouseStartX(null);
-    setMouseEndX(null);
-  };
-
-  // Add click-to-flip support
+  // Only click-to-flip
   const handleCardClick = (e) => {
-    if (!isDragging) {
-      onClick();
-    }
+    onClick();
   };
 
-  // Reset spring if flipped by other means
-  React.useEffect(() => {
-    if (!isDragging && !isFlipped) { // Removed dragFlipped check
-      api.start({ y: 0, shadow: 0 });
-    }
-  }, [isFlipped, isDragging, api]); // Removed dragFlipped from dependency array
-
-  // Card style with animated 3D rotation and shadow
-  const cardStyle = {
-    transform: y.to((v) => `rotateY(${v}deg)`), // Changed to use y directly
-    boxShadow: shadow.to((s) => `0 8px 32px 0 rgba(31,38,135,0.37), 0 1.5px 8px 0 #000a, 0 0 ${8 + s / 2}px ${s / 2}px #00eaff80`),
-    transition: isDragging ? 'none' : 'box-shadow 0.3s',
-    cursor: isDragging ? 'grabbing' : 'grab',
-  };
+  // Generate a random avatar URL based on username or cardIndex
+  const avatarUrl = `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(avatarSeed || username || cardIndex || Math.random())}`;
 
   return (
-    <animated.div
+    <div
       className={`player-card spy-glassmorph ${isFlipped ? 'flipped' : ''} ${variantClass}`}
       tabIndex={0}
       aria-pressed={isFlipped}
       role="button"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
       onClick={handleCardClick}
-      style={cardStyle}
     >
       {/* Card front: dossier cover */}
       <div className="card-front">
         <div className="spy-card-header">
           <div className="spy-avatar-wrapper">
             <img
-              src={avatar || require('../../assets/spy-logo.png')}
+              src={avatarUrl}
               alt="Agent Avatar"
               className="spy-avatar"
             />
@@ -170,12 +55,9 @@ const PlayerCard = ({ word, onClick, isFlipped, avatar, username, role, stats, l
             <span className="spy-role">{role || 'Unknown Role'}</span>
           </div>
         </div>
-        <div className="spy-card-body">
-          <div className="spy-stats">
-            <span>Rank: {stats?.rank || 'Rookie'}</span>
-            <span>Missions: {stats?.missions || 0}</span>
-            <span>Level: {stats?.level || 1}</span>
-          </div>
+        {/* Replace stats with avatar image */}
+        <div className="spy-card-body" style={{ justifyContent: 'center', alignItems: 'center' }}>
+          {/* Avatar already shown above, so leave this empty or add a subtle divider if needed */}
         </div>
         <div className="spy-card-footer">
           <span className="spy-card-action-icon" title="View dossier">
@@ -188,9 +70,7 @@ const PlayerCard = ({ word, onClick, isFlipped, avatar, username, role, stats, l
         <div className="spy-card-micro fx-radar" />
         <div className="spy-card-micro fx-scanlines" />
         <div className="spy-flip-hint">
-          <span className="spy-flip-arrow">&#8592;</span>
-          <span className="spy-flip-label">Swipe or Drag to Flip</span>
-          <span className="spy-flip-arrow">&#8594;</span>
+          <span className="spy-flip-label">Click to Flip</span>
         </div>
         <div className="spy-card-title">Tap to Reveal</div>
       </div>
@@ -217,7 +97,7 @@ const PlayerCard = ({ word, onClick, isFlipped, avatar, username, role, stats, l
         <div className="spy-card-micro fx-radar" />
         <div className="spy-card-micro fx-scanlines" />
       </div>
-    </animated.div>
+    </div>
   );
 };
 
@@ -246,6 +126,7 @@ const Game = () => {
   const [timerSeconds, setTimerSeconds] = useState(240); // 4 minutes in seconds
   const [isTransitioning, setIsTransitioning] = useState(false); // Prevent fast double-clicks
   const [randomWord, setRandomWord] = useState(null); // The selected word object
+  const [avatarSeeds, setAvatarSeeds] = useState([]);
 
   useEffect(() => {
     // Pick a random word object from filtered list
@@ -274,10 +155,14 @@ const Game = () => {
       .fill(null)
       .map((_, i) => shuffledNames[i % shuffledNames.length] + ' #' + (Math.floor(Math.random()*900)+100));
     setUsernames(names);
+
+    // Generate random avatar seeds for each card
+    const seeds = Array(wordsArr.length)
+      .fill(null)
+      .map(() => Math.random().toString(36).substring(2, 12));
+    setAvatarSeeds(seeds);
   }, [playerCount, spayCount, mode, language]);
 
-  console.log("Rn"+randomWord)
-  console.log(wordSets.getRelatedWords(randomWord,language,2))
   const handlePlayerCardClick = () => {
     if (isTransitioning) return; // Prevent action during animation
     // Play flip sound
@@ -346,7 +231,8 @@ const Game = () => {
                   ? wordSets.getRelatedWords(randomWord, language, 2)
                   : undefined
               }
-              // ...other props
+              cardIndex={currentPlayerIndex}
+              avatarSeed={avatarSeeds[currentPlayerIndex]}
             />
           </div>
         ) : (

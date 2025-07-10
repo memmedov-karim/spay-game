@@ -1,21 +1,24 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import SpyLogo from "../assets/spy-logo.png";
 import { translations } from '../data/words';
 import './Navbar.css';
 
+const MOBILE_MAX_VISIBLE = 4;
+
 export default function Navbar({
-  language,
-  gameMode,
-  onLanguageChange,
-  onGameModeChange,
-  onOpenModal,
-  onToggleMusic,
-  isPlaying,
-  isMenuOpen,
-  setIsMenuOpen
+  language = 'en',
+  gameMode = 'classic',
+  onLanguageChange = () => {},
+  onGameModeChange = () => {},
+  onOpenModal = () => {},
+  onToggleMusic = () => {},
+  isPlaying = false,
+  translations: t = translations,
+  ...props
 }) {
-  const menuRef = useRef(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -24,17 +27,18 @@ export default function Navbar({
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) && !event.target.closest('.super-hamburger')) {
-        setIsMenuOpen(false);
+    if (!isDrawerOpen) return;
+    const handleClick = (e) => {
+      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+        setIsDrawerOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [setIsMenuOpen]);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isDrawerOpen]);
 
-  // Config array for navbar items
-  const navbarItems = [
+  // Dynamic menu config
+  const MENU_ITEMS = [
     {
       key: 'gameMode',
       type: 'select',
@@ -42,10 +46,10 @@ export default function Navbar({
       value: gameMode,
       onChange: onGameModeChange,
       options: [
-        { value: 'classic', label: translations[language].classicMode },
-        { value: 'related', label: translations[language].relatedWordsMode }
+        { value: 'classic', label: t[language].classicMode },
+        { value: 'related', label: t[language].relatedWordsMode }
       ],
-      label: translations[language].gameMode
+      label: t[language].gameMode
     },
     {
       key: 'language',
@@ -58,39 +62,56 @@ export default function Navbar({
         { value: 'az', label: 'Azerbaijani' },
         { value: 'tr', label: 'Turkish' }
       ],
-      label: translations[language].language
+      label: t[language].language || 'Language'
     },
     {
       key: 'info',
       type: 'button',
       icon: 'info',
       onClick: onOpenModal,
-      label: translations[language].whatOurAim
+      label: t[language].whatOurAim
     },
     {
       key: 'music',
       type: 'button',
       icon: isPlaying ? 'music_off' : 'music_note',
       onClick: onToggleMusic,
-      label: isPlaying ? translations[language].pauseMusic : translations[language].playMusic
+      label: isPlaying ? t[language].pauseMusic : t[language].playMusic
     },
     {
       key: 'about',
       type: 'link',
       icon: 'help_outline',
-      href: '/about', // Example internal link
-      label: translations[language].about || 'About'
+      href: '/about',
+      label: t[language].about || 'About'
+    },
+    {
+      key: 'reset',
+      type: 'button',
+      icon: 'delete_forever',
+      onClick: () => {
+        localStorage.removeItem('usedWords');
+        window.location.reload();
+      },
+      label: t[language].resetGame || 'Reset Game',
+      mobileOnly: true
     }
     // Add more items here easily
   ];
 
-  const renderItem = (item, isMobile = false) => {
+  // Only show first two items (game mode and language) in mobile bar, rest in More
+  const visibleMobileItems = isMobile ? MENU_ITEMS.slice(0, 2) : MENU_ITEMS;
+  const overflowMobileItems = isMobile ? MENU_ITEMS.slice(2).filter(item => !item.mobileOnly) : [];
+  const mobileOnlyItems = isMobile ? MENU_ITEMS.filter(item => item.mobileOnly) : [];
+
+  // Render a single menu item
+  const renderMenuItem = (item, { isOverflow = false } = {}) => {
     if (item.type === 'select') {
       return (
-        <div className="super-navbar-item" key={item.key}>
-          <span className="material-icons">{item.icon}</span>
+        <div className="spy-navbar-item" key={item.key}>
+          <span className="material-icons spy-navbar-icon">{item.icon}</span>
           <select
-            className="super-navbar-select"
+            className="spy-navbar-select"
             value={item.value}
             onChange={item.onChange}
             title={item.label}
@@ -105,70 +126,86 @@ export default function Navbar({
     if (item.type === 'button') {
       return (
         <button
-          className="super-navbar-icon-btn"
+          className="spy-navbar-item"
           onClick={item.onClick}
           key={item.key}
           title={item.label}
         >
-          <span className="material-icons">{item.icon}</span>
-          {isMobile && <span className="button-text">{item.label}</span>}
+          <span className="material-icons spy-navbar-icon">{item.icon}</span>
+          <span className="spy-navbar-label">{item.label}</span>
         </button>
       );
     }
     if (item.type === 'link') {
       return (
         <a
-          className="super-navbar-icon-btn super-navbar-link"
+          className="spy-navbar-item"
           href={item.href}
           key={item.key}
           title={item.label}
           target={item.external ? '_blank' : undefined}
           rel={item.external ? 'noopener noreferrer' : undefined}
         >
-          <span className="material-icons">{item.icon}</span>
-          {isMobile && <span className="button-text">{item.label}</span>}
+          <span className="material-icons spy-navbar-icon">{item.icon}</span>
+          <span className="spy-navbar-label">{item.label}</span>
         </a>
       );
     }
-    // Add more types as needed
     return null;
   };
 
-  return (
-    <nav className="super-navbar glassmorph">
-      <div className="super-navbar-left">
-        <img src={SpyLogo} alt="Spy Game Logo" className="super-navbar-logo" />
-        <h1 className="super-navbar-title neon-text">{translations[language].title}</h1>
+  // Desktop Navbar
+  const renderDesktop = () => (
+    <nav className="spy-navbar glassmorph">
+      <div className="spy-navbar-left">
+        <img src={SpyLogo} alt="Spy Game Logo" className="spy-navbar-logo" />
+        <h1 className="spy-navbar-title neon-text">{t[language].title}</h1>
       </div>
-      {!isMobile && (
-        <div className="super-navbar-center">
-          {navbarItems.map(item => renderItem(item))}
-        </div>
-      )}
-      <div className="super-navbar-right">
-        {isMobile ? (
-          <button
-            className={`super-hamburger ${isMenuOpen ? 'open' : ''}`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-            type="button"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        ) : null}
+      <div className="spy-navbar-center">
+        {MENU_ITEMS.map(item => renderMenuItem(item))}
       </div>
-      {isMobile && (
-        <div
-          ref={menuRef}
-          className={`super-navbar-mobile glassmorph ${isMenuOpen ? 'open' : ''}`}
-        >
-          <div className="super-navbar-mobile-content">
-            {navbarItems.map(item => renderItem(item, true))}
-          </div>
-        </div>
-      )}
     </nav>
   );
+
+  // Mobile Navbar (bottom bar)
+  const renderMobile = () => (
+    <>
+      <nav className="spy-navbar-mobile glassmorph">
+        {visibleMobileItems.map(item => renderMenuItem(item))}
+        {overflowMobileItems.length > 0 && (
+          <button
+            className="spy-navbar-item spy-navbar-more-btn"
+            onClick={() => setIsDrawerOpen(true)}
+            tabIndex={0}
+            aria-label="More"
+          >
+            <span className="material-icons spy-navbar-icon">more_horiz</span>
+            <span className="spy-navbar-label">More</span>
+          </button>
+        )}
+      </nav>
+      {/* Drawer/Modal for overflow */}
+      <div className={`spy-navbar-drawer-backdrop${isDrawerOpen ? ' open' : ''}`}></div>
+      <div
+        className={`spy-navbar-drawer glassmorph${isDrawerOpen ? ' open' : ''}`}
+        ref={drawerRef}
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          className="spy-navbar-drawer-close"
+          onClick={() => setIsDrawerOpen(false)}
+          aria-label="Close"
+        >
+          <span className="material-icons">close</span>
+        </button>
+        <div className="spy-navbar-drawer-content">
+          {overflowMobileItems.map(item => renderMenuItem(item, { isOverflow: true }))}
+          {mobileOnlyItems.map(item => renderMenuItem(item, { isOverflow: true }))}
+        </div>
+      </div>
+    </>
+  );
+
+  return isMobile ? renderMobile() : renderDesktop();
 } 

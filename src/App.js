@@ -60,20 +60,29 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home 
-          language={language} 
-          gameMode={gameMode} 
-          handleLanguageChange={handleLanguageChange} 
-          handleGameModeChange = {handleGameModeChange} 
-          openModal = {openModal} 
-          toggleMusic = {toggleMusic}
-          isPlaying = {isPlaying}
-           isMenuOpen = {isMenuOpen} 
-           setIsMenuOpen = {setIsMenuOpen} />} />
+          <Route path="/" element={<Home
+            language={language}
+            gameMode={gameMode}
+            handleLanguageChange={handleLanguageChange}
+            handleGameModeChange={handleGameModeChange}
+            openModal={openModal}
+            toggleMusic={toggleMusic}
+            isPlaying={isPlaying}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen} />}
+          />
           <Route path="/game/:playercount/:spaycount" element={<Game />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<About language={language}
+            gameMode={gameMode}
+            handleLanguageChange={handleLanguageChange}
+            handleGameModeChange={handleGameModeChange}
+            openModal={openModal}
+            toggleMusic={toggleMusic}
+            isPlaying={isPlaying}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen} />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

@@ -3397,3 +3397,12 @@ export const howToPlay = {
     note: 'İpucu: Tariflerinizde yaratıcı ve dikkatli olun!',
   },
 };
+
+
+
+export const spyNames = [
+  'Shadow Viper', 'Agent Nova', 'Ghost Falcon', 'Cipher', 'Nightshade',
+  'Phantom', 'Specter', 'Blaze', 'Vortex', 'Raven',
+  'Maverick', 'Echo', 'Hawk', 'Onyx', 'Sable',
+  'Tempest', 'Wraith', 'Orion', 'Venom', 'Zero'
+];

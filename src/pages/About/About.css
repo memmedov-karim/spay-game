@@ -1,28 +1,517 @@
-.about-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 32px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-  font-size: 1.1rem;
+/* Add box-sizing for all elements */
+* {
+  box-sizing: border-box;
 }
-.about-container h2 {
-  margin-bottom: 20px;
-  color: #2d3a4a;
+
+/* Root container */
+.about-root {
+  background: linear-gradient(120deg, #0a0f1a 0%, #1a2233 100%);
+  min-height: 100vh;
+  color: #e0e6ed;
+  font-family: 'Share Tech Mono', 'Fira Mono', 'Consolas', monospace;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Hero Section */
+.about-hero {
+  position: relative;
+  width: 100%; /* Changed from 100vw */
+  min-height: 20vh;
+  /* background: url('../../assets/spy-logo.png') center/cover no-repeat, #10131a; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+  overflow: hidden;
+}
+.about-hero-overlay {
+  width: 100%;
+  padding: 48px 0 24px 0; /* Reduced padding for better mobile fit */
+  background: rgba(10, 15, 26, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.about-home-link {
+  color: #00fff7;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.about-home-link:hover {
+  color: #00bcd4;
+}
+.about-hero-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #00fff7;
+  text-shadow: 0 0 12px #00fff7, 0 0 32px #0ff;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+  min-height: 3.2rem;
+  white-space: pre;
+}
+.about-hero-sub {
+  font-size: 1.2rem;
+  color: #e0e6edcc;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Glassmorphic Card */
+.glass-card {
+  background: rgba(20, 30, 50, 0.55);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+  border: 1.5px solid rgba(0,255,247,0.18);
+  margin: 32px auto;
+  padding: 32px 24px;
+  max-width: 700px;
+  backdrop-filter: blur(6px);
+}
+
+/* Mission Section */
+.about-mission h2 {
+  color: #00fff7;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px #00fff7;
+}
+.about-mission p {
+  font-size: 1.15rem;
+  color: #e0e6ed;
   text-align: center;
 }
-.about-container ol {
-  margin-bottom: 20px;
-  padding-left: 20px;
+
+/* Team Section */
+.about-team {
+  margin: 48px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
 }
-.about-winner {
+.about-team h2 {
+  color: #ff007a;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 8px #ff007a;
+}
+.about-team-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+}
+.agent-card {
+  background: rgba(30, 20, 40, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px #ff007a44;
+  border: 1.5px solid #ff007a55;
+  padding: 24px 18px;
+  min-width: 180px;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+.agent-card:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 4px 32px #ff007a99;
+}
+.agent-img-blur {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: blur(1.5px) grayscale(0.7);
+  margin-bottom: 12px;
+}
+.agent-info {
+  color: #fff;
+}
+.agent-codename {
   font-weight: bold;
-  color: #1a7f37;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
 }
-.about-note {
-  color: #555;
+.agent-role {
+  font-size: 0.95rem;
+  color: #00fff7;
+  margin-top: 2px;
+}
+
+/* Journey Section */
+.about-journey {
+  margin: 56px auto 0 auto;
+  max-width: 900px;
+}
+.about-journey h2 {
+  color: #00ff7a;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 8px #00ff7a;
+  text-align: center;
+}
+.journey-timeline {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 32px;
+  padding-bottom: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #00ff7a #222;
+}
+.timeline-step {
+  background: rgba(20, 30, 50, 0.7);
+  border-radius: 14px;
+  border: 1.5px solid #00ff7a55;
+  min-width: 220px;
+  max-width: 260px;
+  padding: 18px 14px;
+  box-shadow: 0 2px 16px #00ff7a44;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.timeline-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: #00ff7a;
+  filter: drop-shadow(0 0 6px #00ff7a);
+}
+.timeline-title {
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+.timeline-desc {
+  color: #e0e6ed;
+  font-size: 0.98rem;
+  text-align: center;
+}
+
+/* Technology Section */
+.about-tech {
+  margin: 56px auto 0 auto;
+  max-width: 700px;
+}
+.classified-card {
+  background: linear-gradient(120deg, #181f2a 60%, #1a2233 100%);
+  border-radius: 16px;
+  border: 2px dashed #00fff7;
+  box-shadow: 0 2px 16px #00fff799;
+  padding: 32px 24px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  position: relative;
+}
+.about-tech h2 {
+  color: #00fff7;
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px #00fff7;
+}
+.tech-terminal {
+  background: #10131a;
+  color: #00ff7a;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.05rem;
+  padding: 18px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #00ff7a44;
+  margin: 0;
+  overflow-x: auto;
+  border: 1px solid #00ff7a44;
+}
+
+/* Contact / CTA Section */
+.about-contact {
+  margin: 56px auto 0 auto;
+  max-width: 700px;
+  text-align: center;
+  padding-bottom: 48px;
+}
+.about-contact h2 {
+  color: #ff007a;
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px #ff007a;
+}
+.about-contact p {
+  color: #e0e6ed;
+  margin-bottom: 1.5rem;
+}
+.cta-btn {
+  background: linear-gradient(90deg, #00fff7 0%, #ff007a 100%);
+  color: #10131a;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 36px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 16px #00fff799;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.04em;
+}
+.cta-btn:hover {
+  background: linear-gradient(90deg, #ff007a 0%, #00fff7 100%);
+  color: #fff;
+  box-shadow: 0 4px 32px #ff007a99;
+}
+
+/* Spy Easter Egg */
+.spy-easter-egg {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+.spy-icon {
+  color: #00fff7;
+  filter: drop-shadow(0 0 8px #00fff7);
+  transition: color 0.2s, filter 0.2s;
+}
+.spy-easter-egg:hover .spy-icon {
+  color: #ff007a;
+  filter: drop-shadow(0 0 12px #ff007a);
+}
+.secret-message {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 30, 50, 0.95);
+  color: #00ff7a;
+  border: 1.5px solid #00ff7a;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 16px #00ff7a44;
+  z-index: 10;
+  min-width: 180px;
+  text-align: center;
+  animation: fadeIn 0.4s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* How to Play Section */
+.about-howtoplay {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.how-title {
+  color: #00fff7;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 8px #00fff7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.briefing-btn {
+  background: linear-gradient(90deg, #00fff7 0%, #ff007a 100%);
+  color: #10131a;
+  font-weight: bold;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 16px #00fff799;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, opacity 0.2s;
+  letter-spacing: 0.04em;
+  opacity: 1;
+}
+.briefing-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.how-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 0 auto;
+  max-width: 520px;
+}
+.how-step {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: opacity 0.5s, transform 0.5s;
+  font-size: 1.08rem;
+  color: #e0e6ed;
+  background: rgba(20, 30, 50, 0.45);
+  border-left: 4px solid #00fff7;
+  border-radius: 8px;
+  margin: 12px 0;
+  padding: 12px 18px 12px 32px;
+  position: relative;
+  box-shadow: 0 2px 12px #00fff733;
+  text-align: left;
+}
+.how-step-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.how-step-index {
+  color: #ff007a;
+  font-weight: bold;
+  margin-right: 0.7em;
+  font-size: 1.1em;
+}
+.how-summary {
+  margin-top: 18px;
+  animation: fadeIn 0.7s;
+}
+.how-winner {
+  color: #00ff7a;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.how-note {
+  color: #ff007a;
   font-style: italic;
   text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .about-team-cards, .journey-timeline {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .about-hero-overlay {
+    padding: 32px 0 16px 0;
+  }
+}
+@media (max-width: 600px) {
+  .about-hero-title {
+    font-size: 1.2rem;
+    min-height: 1.8rem;
+  }
+  .about-hero-sub {
+    font-size: 0.95rem;
+    max-width: 95vw;
+  }
+  .glass-card, .classified-card, .about-contact {
+    padding: 10px 2vw;
+    margin: 16px 0;
+  }
+  .about-team-cards, .journey-timeline {
+    gap: 8px;
+  }
+  .timeline-step, .agent-card {
+    min-width: 110px;
+    max-width: 98vw;
+    padding: 6px 2vw;
+  }
+  .about-mission h2, .about-team h2, .about-journey h2, .about-tech h2, .about-contact h2 {
+    font-size: 1.1rem;
+  }
+  .timeline-title {
+    font-size: 0.95rem;
+  }
+  .timeline-desc {
+    font-size: 0.9rem;
+  }
+  .agent-codename {
+    font-size: 0.98rem;
+  }
+  .agent-role {
+    font-size: 0.85rem;
+  }
+  .tech-terminal {
+    font-size: 0.9rem;
+    padding: 10px 2vw;
+  }
+  .cta-btn {
+    font-size: 0.98rem;
+    padding: 10px 18px;
+  }
+  .secret-message {
+    font-size: 0.95rem;
+    min-width: 120px;
+    padding: 8px 8px;
+  }
+  .about-howtoplay {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 6px 2vw;
+  }
+  .how-title {
+    font-size: 1.05rem;
+  }
+  .how-step {
+    font-size: 0.98rem;
+    padding: 8px 8px 8px 20px;
+    margin: 7px 0;
+  }
+  .how-step-index {
+    font-size: 1em;
+  }
+} 
+
+.about-contact-details {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+.about-contact-row {
+  display: flex;
+  align-items: center;
+  font-size: 1.08rem;
+  color: #e0e6ed;
+  gap: 0.5rem;
+}
+.about-contact-link {
+  color: #00fff7;
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 1.08rem;
+  transition: color 0.2s;
+  word-break: break-all;
+}
+.about-contact-link:hover, .about-contact-link:focus {
+  color: #ff007a;
+}
+@media (max-width: 600px) {
+  .about-contact-details {
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+  .about-contact-row {
+    font-size: 0.98rem;
+  }
+  .about-contact-link {
+    font-size: 0.98rem;
+  }
 } 

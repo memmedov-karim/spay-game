@@ -3201,8 +3201,8 @@ export  const translations = {
     modalContent: 'The "Spy" game was created with a simple yet powerful goal: to bring people together through an engaging and fun experience...',
     close: 'Close',
     gameMode: 'Game Mode',
-    classicMode: 'Classic Mode',
-    relatedWordsMode: 'Related Words Mode',
+    classicMode: 'Classic',
+    relatedWordsMode: 'RWM',
     classicModeDescription: 'Classic spy game with single word per player',
     relatedWordsDescription: 'Spy game with related words shown under spy word'
   },
@@ -3219,8 +3219,8 @@ export  const translations = {
     modalContent: '"Casus" oyunu insanları maraqlı və əyləncəli bir təcrübə ilə bir araya gətirmək üçün sadə, lakin güclü bir məqsədlə yaradılıb...',
     close: 'Bağla',
     gameMode: 'Oyun Rejimi',
-    classicMode: 'Klassik Rejim',
-    relatedWordsMode: 'Əlaqəli Sözlər Rejimi',
+    classicMode: 'Klassik',
+    relatedWordsMode: 'ƏSR',
     classicModeDescription: 'Hər oyunçu üçün tək söz olan klassik casus oyunu',
     relatedWordsDescription: 'Casus sözün altında əlaqəli sözlərin göstərildiyi oyun'
   },
@@ -3237,8 +3237,8 @@ export  const translations = {
     modalContent: '"Casus" oyunu, insanları eğlenceli ve ilgi çekici bir deneyimle bir araya getirmek için basit ama güçlü bir amaçla oluşturulmuştur...',
     close: 'Kapat',
     gameMode: 'Oyun Modu',
-    classicMode: 'Klasik Mod',
-    relatedWordsMode: 'İlgili Kelimeler Modu',
+    classicMode: 'Klasik',
+    relatedWordsMode: 'İKM',
     classicModeDescription: 'Her oyuncu için tek kelime ile klasik casus oyunu',
     relatedWordsDescription: 'Casus kelimenin altında ilgili kelimelerin gösterildiği oyun'
   }
@@ -3278,6 +3278,82 @@ export const formTranslations = {
 // src/data/aboutContent.js
 
 export const aboutContent = {
+  "en": {
+    "heroTitle": "Behind Every Mission, There’s a Story",
+    "heroSub": "Discover who we are, why we created this game, and what drives our mission.",
+    "missionTitle": "Our Mission",
+    "missionText": "To create a unique, immersive spy experience that brings players together in a world of mystery, strategy, and fun.",
+    "teamTitle": "The Team",
+    "team": [
+      { "codename": "Shikhkarim", "role": "Lead Developer" },
+      { "codename": "Shikhkarim", "role": "Game Designer" }
+    ],
+    "journeyTitle": "Our Journey",
+    "journey": [
+      { "title": "The Idea", "desc": "A late-night brainstorm sparked the vision for a spy game like no other." },
+      { "title": "Development", "desc": "Countless hours of coding, designing, and testing in stealth mode." },
+      { "title": "Launch", "desc": "The mission goes live. Agents everywhere join the game!" }
+    ],
+    "techTitle": "Technology Behind the Game",
+    "techText": "// CLASSIFIED\nReact.js\nCSS3 (Glassmorphism, Neon)\nReact Router\nCustom Sound & Animation\n",
+    "contactTitle": "Contact / Join the Mission",
+    "contactText": "Have feedback, want to collaborate, or just want to say hi? Contact HQ!",
+    "contactBtn": "Join the Mission",
+    "contactLink": "mailto:spyhq@example.com",
+    "secretMessage": "The password is: TRUSTNO1"
+  },
+  "az": {
+    "heroTitle": "Hər Missiyanın Arxasında Bir Hekayə Var",
+    "heroSub": "Biz kimik, bu oyunu niyə yaratdıq və bizi nə motivasiya edir? Kəşf edin.",
+    "missionTitle": "Məqsədimiz",
+    "missionText": "Oyunçuları sirr, strategiya və əyləncə dolu casus dünyasında bir araya gətirən unikal bir təcrübə yaratmaq.",
+    "teamTitle": "Komanda",
+    "team": [
+      { "codename": "Shikhkarim", "role": "Aparıcı Proqramçı" },
+      { "codename": "Shikhkarim", "role": "Oyun Dizayneri" }
+    ],
+    "journeyTitle": "Səyahətimiz",
+    "journey": [
+      { "title": "İdeya", "desc": "Gecə yarısı yaranan bir fikir, fərqli casus oyununun başlanğıcı oldu." },
+      { "title": "İnkişaf", "desc": "Gizli rejimdə saysız saatlar kodlaşdırma, dizayn və test." },
+      { "title": "Başlanğıc", "desc": "Missiya başladı. Agentlər hər yerdə oyuna qoşulur!" }
+    ],
+    "techTitle": "Oyun Texnologiyası",
+    "techText": "// MƏXFİ\nReact.js\nCSS3 (Şüşə effekti, Neon)\nReact Router\nXüsusi Səs və Animasiya\n",
+    "contactTitle": "Əlaqə / Missiyaya Qoşul",
+    "contactText": "Rəyiniz var, əməkdaşlıq etmək istəyirsiniz, yoxsa sadəcə salam demək istəyirsiniz? HQ ilə əlaqə saxlayın!",
+    "contactBtn": "Missiyaya Qoşul",
+    "contactLink": "mailto:spyhq@example.com",
+    "secretMessage": "Şifrə: GIZLISÖZ"
+  },
+  "tr": {
+    "heroTitle": "Her Görevin Arkasında Bir Hikaye Var",
+    "heroSub": "Kim olduğumuzu, bu oyunu neden yarattığımızı ve bizi neyin motive ettiğini keşfedin.",
+    "missionTitle": "Misyonumuz",
+    "missionText": "Oyuncuları gizem, strateji ve eğlence dolu bir casus dünyasında bir araya getiren benzersiz bir deneyim oluşturmak.",
+    "teamTitle": "Ekip",
+    "team": [
+      { "codename": "Şıxkərim", "role": "Baş Geliştirici" },
+      { "codename": "Şıxkərim", "role": "Oyun Tasarımcısı" }
+    ],
+    "journeyTitle": "Yolculuğumuz",
+    "journey": [
+      { "title": "Fikir", "desc": "Gece yarısı ortaya çıkan bir fikir, farklı bir casus oyununun başlangıcı oldu." },
+      { "title": "Geliştirme", "desc": "Gizli modda sayısız saat kodlama, tasarım ve test." },
+      { "title": "Lansman", "desc": "Görev başladı. Ajanlar her yerde oyuna katılıyor!" }
+    ],
+    "techTitle": "Oyunun Teknolojisi",
+    "techText": "// GİZLİ\nReact.js\nCSS3 (Cam efekti, Neon)\nReact Router\nÖzel Ses & Animasyon\n",
+    "contactTitle": "İletişim / Göreve Katıl",
+    "contactText": "Geri bildiriminiz mi var, iş birliği yapmak mı istiyorsunuz, yoksa sadece merhaba mı demek istiyorsunuz? HQ ile iletişime geçin!",
+    "contactBtn": "Göreve Katıl",
+    "contactLink": "mailto:spyhq@example.com",
+    "secretMessage": "Şifre: GIZLISIFRE"
+  }
+};
+
+
+export const howToPlay = {
   en: {
     title: 'How to Play Spy Game',
     steps: [
